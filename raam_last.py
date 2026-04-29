@@ -4,6 +4,7 @@ import numpy as np
 from datetime import date
 import warnings
 warnings.filterwarnings("ignore")
+from bist_symbols import SECTORS
 
 # ─────────────────────────────────────────
 # KONFİGÜRASYON — buradan ayarlayın
@@ -30,6 +31,10 @@ UNIVERSE = {
     "ENKAI.IS": "Enka İnşaat",
     "EKGYO.IS": "Emlak Konut GYO",
 }
+for sector in SECTORS:
+    for sym in SECTORS[sector]:
+        UNIVERSE[sym] = sym  # Sembolün kendisi ad olarak eklenir (böylece sektör dışı hisseler de gösterilir)
+
 CASH = "XU030.IS"
 
 CFG = {

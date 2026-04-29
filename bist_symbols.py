@@ -1,61 +1,3 @@
-import os
-import sys
-from typing import List, Optional
-
-_BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
-if _BACKEND_DIR not in sys.path:
-    sys.path.insert(0, _BACKEND_DIR)
-
-from universe_registry import (
-    apply_snapshot as apply_universe_snapshot,
-    get_memberships as get_universe_memberships,
-    get_snapshot as get_universe_snapshot,
-    get_universe,
-)
-
-
-# bist_symbols.py — Tüm BIST Hisse Listeleri
-
-
-def _load_universe_or_fail(index_code: str) -> List[str]:
-    symbols = get_universe(index_code)
-    if not symbols:
-        raise RuntimeError(f"{index_code} universe is empty")
-    return symbols
-
-
-BIST30 = _load_universe_or_fail("BIST30")
-BIST50 = _load_universe_or_fail("BIST50")
-BIST100 = _load_universe_or_fail("BIST100")
-ALL_BIST = _load_universe_or_fail("ALL_BIST")
-
-_bist30_set = set(BIST30)
-_bist50_set = set(BIST50)
-
-# Geriye uyumluluk için korunuyor.
-BIST50_ADDITIONAL = [symbol for symbol in BIST50 if symbol not in _bist30_set]
-BIST100_ADDITIONAL = [symbol for symbol in BIST100 if symbol not in _bist50_set]
-
-
-def get_universe_for_date(index_code: str, as_of: Optional[str] = None) -> List[str]:
-    return get_universe(index_code, as_of=as_of)
-
-# Yahoo Finance için .IS uzantısı ekle
-def get_yahoo_symbols(symbols):
-    return [f"{s}.IS" for s in symbols]
-
-def get_all_yahoo_symbols():
-    return get_yahoo_symbols(ALL_BIST)
-
-def get_bist30_yahoo():
-    return get_yahoo_symbols(BIST30)
-
-def get_bist50_yahoo():
-    return get_yahoo_symbols(BIST50)
-
-def get_bist100_yahoo():
-    return get_yahoo_symbols(BIST100)
-
 # Sembol -> Şirket adı eşleşmesi (başlıca hisseler)
 COMPANY_NAMES = {
     "ADGYO" : "ADRA GMYO",
@@ -672,8 +614,7 @@ COMPANY_NAMES = {
     "ZRGYO": "ZIRAAT GMYO",
     "ZGYO": "Z GMYO",
 }
-def get_company_name(symbol):
-    return COMPANY_NAMES.get(symbol, symbol)
+
 
 # Sektör eşleşmesi
 SECTORS = {

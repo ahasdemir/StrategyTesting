@@ -5,11 +5,13 @@ from datetime import date
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import warnings
+from bist_symbols import SECTORS
 warnings.filterwarnings("ignore")
+
 
 # ─────────────────────────────────────────
 # KONFİGÜRASYON
-# ─────────────────────────────────────────
+# ───────────────────────────────────E──────
 UNIVERSE = {
     "GARAN.IS": "Garanti BBVA",
     "AKBNK.IS": "Akbank",
@@ -32,6 +34,7 @@ UNIVERSE = {
     "ENKAI.IS": "Enka İnşaat",
     "EKGYO.IS": "Emlak Konut GYO",
 }
+
 CASH = "XU030.IS"
 
 CFG = {
