@@ -5,7 +5,7 @@ from datetime import date
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import warnings
-from bist_symbols import SECTORS
+from RAAM.bist_symbols import SECTORS
 warnings.filterwarnings("ignore")
 
 

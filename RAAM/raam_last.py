@@ -4,7 +4,7 @@ import numpy as np
 from datetime import date
 import warnings
 warnings.filterwarnings("ignore")
-from bist_symbols import SECTORS
+from RAAM.bist_symbols import SECTORS
 
 # ─────────────────────────────────────────
 # KONFİGÜRASYON — buradan ayarlayın
