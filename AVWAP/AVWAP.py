@@ -84,11 +84,26 @@ def plot_results(data, ticker):
     plt.show()
 
 
-def portfolio_analysis(data):
-    """
-    Analyze the portfolio performance based on the strategy.
-    """
-    total_return = data['Cumulative_Returns'].iloc[-1]
-    win_rate = data['Win_Rate'].iloc[-1]
-    print(f'Total Return: {total_return:.2%}')
-    print(f'Win Rate: {win_rate:.2%}')
+#test the strategy on a portfolio of stocks
+
+def test_portfolio(portfolio):
+    results = {}
+    for ticker in portfolio:
+        print(f"Testing strategy for {ticker}...")
+        data = test_strategy(ticker)
+        results[ticker] = data
+    cum_return_of_portfolio = pd.DataFrame({ticker: data['Cumulative_Returns'] for ticker, data in results.items()})
+    cum_return_of_portfolio['Average_Cumulative_Returns'] = cum_return_of_portfolio.mean(axis=1)
+    plt.figure(figsize=(14, 7))
+    for ticker in portfolio:
+        plt.plot(cum_return_of_portfolio.index, cum_return_of_portfolio[ticker], label=f'{ticker} Cumulative Returns')
+    plt.plot(cum_return_of_portfolio.index, cum_return_of_portfolio['Average_Cumulative_Returns'], label='Average Cumulative Returns', color='black', linestyle='--')
+    plt.title('Cumulative Returns of AVWAP Strategy for Portfolio')
+    plt.xlabel('Date')
+    plt.legend()
+    plt.show()
+    return results
+
+
+portfolio = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA']
+portdf = test_portfolio(portfolio)
