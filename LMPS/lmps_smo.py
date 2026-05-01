@@ -10,6 +10,7 @@ Tüm ML saf NumPy ile uygulanmıştır (PyTorch/TF yok).
 import numpy as np
 import json
 import warnings
+import matplotlib.pyplot as plt
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -1453,7 +1454,20 @@ def main():
     print(f"Gösterge paneli oluşturuldu → {dash_path}")
     print("\nTamamlandı!")
     return results
-
+    # 9.a Basic matplotlib görselleştirme
+    plt.figure(figsize=(10, 6))
+    plt.plot(dates_test, lmps_wealth, label="LMPS-SMO", color="#00d2ff", linewidth=2.5)
+    for idx_p, pname in enumerate(POLICY_NAMES):
+        plt.plot(dates_test, baseline_wealth[pname], label=pname, linewidth=1.2, linestyle='--')
+    plt.title("Birikimli Zenginlik Eğrileri (Test Dönemi)")
+    plt.xlabel("Tarih")
+    plt.ylabel("Birikimli Servet")
+    plt.legend()
+    plt.grid(alpha=0.3)
+    plt.tight_layout()
+    plt_path = out_dir / "wealth_curves.png"
+    plt.savefig(plt_path)
+    print(f"Görselleştirme kaydedildi → {plt_path}")
 
 if __name__ == "__main__":
     main()
