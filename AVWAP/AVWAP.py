@@ -104,6 +104,14 @@ def test_portfolio(portfolio):
     plt.show()
     return results
 
+BIST50 = [
+    "AKBNK.IS","ARCLK.IS","ASELS.IS","BIMAS.IS","EKGYO.IS",
+    "EREGL.IS","FROTO.IS","GARAN.IS","HALKB.IS","ISCTR.IS",
+    "KCHOL.IS","KRDMD.IS","MGROS.IS","PETKM.IS",
+    "PGSUS.IS","SAHOL.IS","SISE.IS","TCELL.IS","THYAO.IS",
+    "TUPRS.IS","VAKBN.IS","VESTL.IS","YKBNK.IS","AEFES.IS",
+    "AKSEN.IS","ALARK.IS","ENKAI.IS","GUBRF.IS","TTKOM.IS",
+] 
 
 portfolio = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA']
-portdf = test_portfolio(portfolio)
+portdf = test_portfolio(BIST50)

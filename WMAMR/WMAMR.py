@@ -3,7 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import yfinance as yf
 import cvxpy as cp
+import os
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+tickers = pd.read_csv(os.path.join(script_dir, "tickers.csv"), skiprows=[1])["Ticker"].tolist()
 
 def fetch_data(ticker, start_date="2025-01-01", end_date="2025-12-31"):
     data = yf.download(ticker, start=start_date, end=end_date)
@@ -72,21 +75,13 @@ def run_wmamr(tickers, start_date, end_date, w=5, epsilon=0.9):
         
     return pd.Series(portfolio_value, index=df.index[w:], name="WMAMR_Wealth")
 
-BIST50 = [
-    "AKBNK.IS","ARCLK.IS","ASELS.IS","BIMAS.IS","EKGYO.IS",
-    "EREGL.IS","FROTO.IS","GARAN.IS","HALKB.IS","ISCTR.IS",
-    "KCHOL.IS","KRDMD.IS","MGROS.IS","PETKM.IS",
-    "PGSUS.IS","SAHOL.IS","SISE.IS","TCELL.IS","THYAO.IS",
-    "TUPRS.IS","VAKBN.IS","VESTL.IS","YKBNK.IS","AEFES.IS",
-    "AKSEN.IS","ALARK.IS","ENKAI.IS","GUBRF.IS","TTKOM.IS",
-] 
 
 start_date, end_date = "2026-01-01", "2026-04-30"
 # --- Example Usage ---
-tickers = ["AAPL", "MSFT", "GOOGL", "AMZN"]
-results = run_wmamr(BIST50, start_date, end_date, w=5, epsilon=0.95)
+results = run_wmamr(tickers, start_date, end_date, w=5, epsilon=0.95)
 xu100 = yf.download("XU100.IS", start=start_date, end=end_date)['Close']
 xu100 = xu100 / xu100.iloc[0]  # Normalize to start at 1
+print(results)
 
 # Plotting the results
 plt.figure(figsize=(14, 7))
@@ -97,4 +92,5 @@ plt.xlabel("Date")
 plt.ylabel("Portfolio Value")
 plt.legend()
 plt.show()
+plt.savefig(os.path.join(script_dir, "wmamr_performance.png"))
 
